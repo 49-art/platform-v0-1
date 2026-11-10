@@ -1,0 +1,53 @@
+14. Open decisions for Travis
+
+| Decision                                   | Options                                      | Suggested default                                                                      |
+| ------------------------------------------ | -------------------------------------------- | -------------------------------------------------------------------------------------- |
+| Platform name and domain                   | TBD                                          | Pick before P0-3 (branding)                                                            |
+| ID + liveness provider                     | Yoti, Onfido, Persona, Veriff                | Get quotes from Yoti and Persona; choose on UK coverage, price per check, HEAA support |
+| Database                                   | D1 or Neon Postgres                          | Neon if location search and growth matter; D1 for cheapest MVP                         |
+| Budget                                     | Monthly run cost + verification + legal      | Set a cap for the first six months                                                     |
+| When ID is required                        | Before dates only, or before any chat        | Before dates (per brief); consider before photo-sharing too                            |
+| Can creators have dating profiles?         | Never / separate account / allowed           | Never (cleanest separation)                                                            |
+| Explicit content on creator side at launch | Yes / SFW-only first                         | SFW-only first until age assurance and records are proven                              |
+| Where your fan-site links live             | Founder page / creator page                  | Creator-side founder page, not the dating side                                         |
+| Launch geography                           | UK only / wider                              | UK only                                                                                |
+| Moderation staffing                        | Travis + volunteers / paid mods              | At least two trained moderators before public launch                                   |
+| Separate legal entity for agency           | Yes / no                                     | Ask solicitor                                                                          |
+| Which community platforms                  | WhatsApp, Signal, Telegram, Reddit, Facebook | Start with one or two you can moderate well                                            |
+
+15. Risks
+
+| Risk                                           | Impact                                          | Mitigation                                                                     |
+| ---------------------------------------------- | ----------------------------------------------- | ------------------------------------------------------------------------------ |
+| Creator side read as facilitating prostitution | Criminal liability, shutdown                    | Hard separation, no contact tools, scanning, legal opinion before Phase 2      |
+| OSA non-compliance                             | Ofcom fines up to £18m or 10% of global revenue | Risk assessment, HEAA, codes mapping, records                                  |
+| Leak of sexuality data                         | Serious harm to users, ICO action               | Field encryption, least privilege, audit, DPIA, pen test                       |
+| Minor gets on the platform                     | Safeguarding failure                            | HEAA at sign-up, ID before dates, report-underage priority                     |
+| Romance scams and bots                         | User harm, trust loss                           | Verification, risk scoring, contact shield, fast bans                          |
+| Payment processor refusal or termination       | No revenue on creator side                      | Apply early, keep content rules strict, have a second processor                |
+| ID verification cost per user                  | Budget pressure on a free product               | Verify only when a date is wanted; negotiate volume pricing                    |
+| Moderation workload outgrows team              | Slow queues, harm missed                        | Auto-scoring, queues by priority, SLAs, staffing plan                          |
+| X API or XChat changes                         | Sign-in or deep link breaks                     | Email login always available; X features optional                              |
+| Community groups banned by host platforms      | Lost channels                                   | SFW-only rules, named moderators                                               |
+| Workers CPU limits for password hashing        | Slow or failed logins                           | Benchmark early; tune parameters or offload                                    |
+| IWF not available until trading 12 months      | Gap in hash coverage                            | Cloudflare CSAM tool + other hash services meanwhile [UNVERIFIED alternatives] |
+
+Sources checked
+Ofcom: Dating and social discovery — online safety rules
+ofcom.org.uk
+Ofcom: Age assurance duties
+ofcom.org.uk
+ICO data protection fee
+ico.org.uk
+Cloudflare Workers pricing
+developers.cloudflare.com
+Cloudflare CSAM Scanning Tool
+blog.cloudflare.com
+X Money availability
+wise.com
+X Chat API overview
+twitterapi.io
+IWF membership fees
+iwf.org.uk
+Adult processor fees compared
+ofengine.com

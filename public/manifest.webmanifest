@@ -1,0 +1,22 @@
+{
+  "name": "[NAME TBD] — verified dating (SAMPLE)",
+  "short_name": "NAME TBD",
+  "description": "Free dating for verified adults. Real people only. Both of you verified before you meet.",
+  "id": "/",
+  "start_url": "/app",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#120a26",
+  "theme_color": "#120a26",
+  "categories": ["lifestyle", "social"],
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "screenshots": [
+    { "src": "/screenshots/phone-welcome.png", "sizes": "390x844", "type": "image/png", "form_factor": "narrow", "label": "Both of you verified, then dinner" },
+    { "src": "/screenshots/wide-welcome.png", "sizes": "1280x800", "type": "image/png", "form_factor": "wide", "label": "Welcome screen" }
+  ]
+}

@@ -1,0 +1,16 @@
+# Copy to .dev.vars for local development (wrangler dev). Never commit .dev.vars.
+# Names only. For the live site these are set in Cloudflare as secrets, never in the repo.
+# Leave the first three empty and the app generates its own on first run (SAMPLE only, see docs/DECISIONS.md D-021).
+APP_SECRET=
+INTERNAL_SECRET=
+PROVIDER_WEBHOOK_SECRET=
+# Local development only: the address wrangler dev serves on, so the CSRF origin check passes.
+APP_ORIGIN=http://localhost:8787
+# Optional real providers, once chosen (spec 12):
+# TURNSTILE_SECRET=
+# RESEND_API_KEY=
+# MAIL_FROM=
+# X_CLIENT_SECRET=
+# VAPID_PRIVATE_JWK=
+# SIGHTENGINE_USER=
+# SIGHTENGINE_SECRET=

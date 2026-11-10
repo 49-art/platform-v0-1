@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>You are offline</title>
+<style>
+  body { margin: 0; min-height: 100vh; display: grid; place-content: center; text-align: center; padding: 2rem; background: #120a26; color: #f3eeff; font: 17px/1.5 system-ui, sans-serif; }
+  .ring { width: 72px; height: 72px; border-radius: 50%; margin: 0 auto 1rem; border: 6px dashed #44337f; }
+  h1 { font-size: 1.6rem; margin: 0 0 .5rem; }
+  p { color: #c3b8e6; max-width: 32ch; margin: 0 auto 1.25rem; }
+  button { font: 700 17px system-ui, sans-serif; background: #c6ff1a; color: #120a26; border: 0; padding: .85rem 1.25rem; min-height: 48px; cursor: pointer; }
+</style>
+</head>
+<body>
+  <div class="ring" aria-hidden="true"></div>
+  <h1>You are offline</h1>
+  <p>Chats and matches need a connection. Check your signal or Wi-Fi, then try again.</p>
+  <button type="button" onclick="location.reload()">Try again</button>
+  <p style="margin-top:1.5rem">In an emergency call 999.</p>
+</body>
+</html>

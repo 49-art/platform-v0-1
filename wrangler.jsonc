@@ -1,0 +1,52 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // SAMPLE deployment on the Cloudflare Workers FREE plan (decisions D-013 to D-021).
+  // The paid-plan shape from the spec (R2, KV, Queues, separate admin Worker) is kept in docs/archive/wrangler.paid-plan.jsonc.
+  "name": "platform-v0-1",
+  "main": "./worker/index.ts",
+  "compatibility_date": "2026-11-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": false },
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*", "/media/*", "/internal/*"]
+  },
+  // No database_id: Wrangler creates the database on the first deploy (automatic provisioning).
+  // The Worker applies migrations itself on first use (worker/lib/bootstrap.ts).
+  "d1_databases": [{ "binding": "DB", "database_name": "platform-v0-1", "migrations_dir": "./migrations" }],
+  "durable_objects": {
+    "bindings": [
+      { "name": "CHAT_ROOM", "class_name": "ChatRoom" },
+      { "name": "USER_HUB", "class_name": "UserHub" },
+      { "name": "DATE_TIMER", "class_name": "DateTimer" },
+      { "name": "RATE_LIMITER", "class_name": "RateLimiter" }
+    ]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["ChatRoom", "UserHub", "DateTimer", "RateLimiter"] }],
+  // Scheduled erasure of deleted accounts (spec 3: within 30 days). Hourly is plenty and stays inside free limits.
+  "triggers": { "crons": ["17 * * * *"] },
+  "vars": {
+    "ENVIRONMENT": "sample",
+    "SAMPLE_MODE": "1",
+    "APP_NAME": "[NAME TBD]",
+    "APP_ORIGIN": "https://platform-v0-1.hvtinnovations1.workers.dev",
+    "ADMIN_ORIGIN": "https://platform-v0-1.hvtinnovations1.workers.dev",
+    // Cloudflare's published always-pass Turnstile TEST keys (public values, not secrets). Replace before launch.
+    "TURNSTILE_SITE_KEY": "1x00000000000000000000AA",
+    "TURNSTILE_SECRET": "1x0000000000000000000000000000000AA",
+    "PASSWORD_ALGO": "pbkdf2",
+    "EMAIL_TRANSPORT": "log",
+    "SMS_TRANSPORT": "log",
+    "AGE_PROVIDER": "mock",
+    "IDV_PROVIDER": "mock",
+    "SCAN_PROVIDER": "mock",
+    "X_CLIENT_ID": "",
+    "VAPID_PUBLIC_KEY": "",
+    "PREMOD_SLA_HOURS": "4"
+  }
+  // Secrets, set in Cloudflare before real launch (names only, see .dev.vars.example):
+  // APP_SECRET, INTERNAL_SECRET, PROVIDER_WEBHOOK_SECRET, TURNSTILE_SECRET, RESEND_API_KEY, MAIL_FROM,
+  // X_CLIENT_SECRET, VAPID_PRIVATE_JWK, SIGHTENGINE_USER, SIGHTENGINE_SECRET
+}

@@ -1,0 +1,54 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Member-facing app: API + server-rendered PWA + realtime Durable Objects (spec 11).
+  "name": "platform-web",
+  "main": "./workers/app.ts",
+  "compatibility_date": "2026-11-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": true },
+  "d1_databases": [
+    { "binding": "DB", "database_name": "platform", "database_id": "REPLACE_WITH_D1_DATABASE_ID", "migrations_dir": "../../packages/core/migrations" }
+  ],
+  "r2_buckets": [{ "binding": "MEDIA", "bucket_name": "platform-media" }],
+  "kv_namespaces": [{ "binding": "KV", "id": "REPLACE_WITH_KV_NAMESPACE_ID" }],
+  "durable_objects": {
+    "bindings": [
+      { "name": "CHAT_ROOM", "class_name": "ChatRoom" },
+      { "name": "USER_HUB", "class_name": "UserHub" },
+      { "name": "DATE_TIMER", "class_name": "DateTimer" },
+      { "name": "RATE_LIMITER", "class_name": "RateLimiter" }
+    ]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["ChatRoom", "UserHub", "DateTimer", "RateLimiter"] }],
+  "queues": {
+    "producers": [
+      { "binding": "Q_SCAN", "queue": "platform-moderation-scan" },
+      { "binding": "Q_NOTIFY", "queue": "platform-notify" },
+      { "binding": "Q_MAINT", "queue": "platform-maintenance" }
+    ],
+    "consumers": [
+      { "queue": "platform-moderation-scan", "max_batch_size": 5, "max_retries": 5, "dead_letter_queue": "platform-dead-letter" },
+      { "queue": "platform-notify", "max_batch_size": 20, "max_retries": 3, "dead_letter_queue": "platform-dead-letter" },
+      { "queue": "platform-maintenance", "max_batch_size": 20, "max_retries": 5, "dead_letter_queue": "platform-dead-letter" }
+    ]
+  },
+  "triggers": { "crons": ["*/15 * * * *"] },
+  "vars": {
+    "ENVIRONMENT": "development",
+    "APP_NAME": "[NAME TBD]",
+    "APP_ORIGIN": "http://localhost:5173",
+    "ADMIN_ORIGIN": "http://localhost:8788",
+    // Cloudflare's published always-pass test keys. Replace with real widget keys before any deployment.
+    "TURNSTILE_SITE_KEY": "1x00000000000000000000AA",
+    "EMAIL_TRANSPORT": "log",
+    "SMS_TRANSPORT": "log",
+    "AGE_PROVIDER": "mock",
+    "IDV_PROVIDER": "mock",
+    "SCAN_PROVIDER": "mock",
+    "X_CLIENT_ID": "",
+    "VAPID_PUBLIC_KEY": "",
+    "PREMOD_SLA_HOURS": "4"
+  }
+  // Secrets (wrangler secret put / .dev.vars): APP_SECRET, TURNSTILE_SECRET, INTERNAL_SECRET, PROVIDER_WEBHOOK_SECRET,
+  // RESEND_API_KEY, MAIL_FROM, X_CLIENT_SECRET, VAPID_PRIVATE_JWK, SIGHTENGINE_USER, SIGHTENGINE_SECRET
+}

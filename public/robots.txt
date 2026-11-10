@@ -1,0 +1,3 @@
+# SAMPLE build: not for search engines until the founder says it can go public.
+User-agent: *
+Disallow: /

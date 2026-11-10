@@ -1,0 +1,43 @@
+{
+  // Test-only configuration: same bindings as production, a test entry that skips the React build.
+  "name": "platform-web-test",
+  "main": "./tests/worker.ts",
+  "compatibility_date": "2026-11-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "d1_databases": [{ "binding": "DB", "database_name": "platform-test", "database_id": "test" }],
+  "r2_buckets": [{ "binding": "MEDIA", "bucket_name": "platform-media-test" }],
+  "durable_objects": {
+    "bindings": [
+      { "name": "CHAT_ROOM", "class_name": "ChatRoom" },
+      { "name": "USER_HUB", "class_name": "UserHub" },
+      { "name": "DATE_TIMER", "class_name": "DateTimer" },
+      { "name": "RATE_LIMITER", "class_name": "RateLimiter" }
+    ]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["ChatRoom", "UserHub", "DateTimer", "RateLimiter"] }],
+  "queues": {
+    "producers": [
+      { "binding": "Q_SCAN", "queue": "test-scan" },
+      { "binding": "Q_NOTIFY", "queue": "test-notify" },
+      { "binding": "Q_MAINT", "queue": "test-maint" }
+    ]
+  },
+  "vars": {
+    "ENVIRONMENT": "test",
+    "APP_NAME": "TestApp",
+    "APP_ORIGIN": "https://app.test",
+    "ADMIN_ORIGIN": "https://admin.test",
+    "TURNSTILE_SITE_KEY": "test",
+    "TURNSTILE_SECRET": "test-secret",
+    "APP_SECRET": "test-app-secret-0123456789abcdef0123456789abcdef",
+    "INTERNAL_SECRET": "test-internal-secret",
+    "PROVIDER_WEBHOOK_SECRET": "test-webhook-secret",
+    "EMAIL_TRANSPORT": "log",
+    "SMS_TRANSPORT": "log",
+    "AGE_PROVIDER": "mock",
+    "IDV_PROVIDER": "mock",
+    "SCAN_PROVIDER": "mock",
+    "TEST_FAST_HASH": "1",
+    "PREMOD_SLA_HOURS": "4"
+  }
+}

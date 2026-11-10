@@ -1,0 +1,50 @@
+{
+  "name": "platform-v0-1",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "[NAME TBD] verified 18+ dating platform, spec v0.1 build. SAMPLE.",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "node scripts/gen-migrations.mjs && tsc -p tsconfig.json --noEmit && vite build",
+    "build:only": "vite build",
+    "preview": "vite build && wrangler dev",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "check:browser": "node scripts/browser-check.mjs",
+    "check:secrets": "secretlint \"**/*\"",
+    "deploy:dry": "wrangler deploy --dry-run --outdir .wrangler/dry",
+    "icons": "node scripts/make-icons.mjs"
+  },
+  "dependencies": {
+    "@fontsource-variable/unbounded": "^5.3.0",
+    "@fontsource/atkinson-hyperlegible": "^5.3.0",
+    "@noble/hashes": "^2.4.0",
+    "drizzle-orm": "^0.45.4",
+    "hono": "^4.13.17",
+    "qrcode": "^1.5.4",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-router": "^8.5.1",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-plugin": "^1.7.0",
+    "@cloudflare/workers-types": "^5.20261110.1",
+    "@secretlint/secretlint-rule-preset-recommend": "^13.1.0",
+    "@types/node": "^22",
+    "@types/qrcode": "^1.5.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.3.0",
+    "drizzle-kit": "^0.31.11",
+    "secretlint": "^13.1.0",
+    "typescript": "^5.9.3",
+    "vite": "^8.3.7",
+    "vitest": "^5.1.0",
+    "wrangler": "^4.160.0"
+  }
+}
